@@ -23,5 +23,9 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  Dir["#{__dir__}/support/**/*"].each { |f| require f }
+
+  config.include SourceHelper
+
   config.order = :random
 end
