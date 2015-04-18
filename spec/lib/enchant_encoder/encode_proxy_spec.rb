@@ -52,6 +52,13 @@ RSpec.describe FileEncoder::EncodeProxy do
 
         context '#open' do
           context 'if block given' do
+            it "yields converted string by NKF" do
+              expect do |b|
+                proxy.open(src_path('data-simple-sjis.txt')) do |f|
+                  f.each(&b)
+                end
+              end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+            end
           end
 
           context 'no block given' do
