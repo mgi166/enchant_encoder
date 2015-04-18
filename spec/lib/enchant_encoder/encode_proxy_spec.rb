@@ -1,5 +1,5 @@
 RSpec.describe FileEncoder::EncodeProxy do
-  describe '#initialize' do
+  describe '#method_missing' do
     context 'when File' do
       let(:proxy) { FileEncoder::EncodeProxy.new(file) }
 
@@ -51,7 +51,7 @@ RSpec.describe FileEncoder::EncodeProxy do
         end
 
         context '#open' do
-          context 'if block given' do
+          context 'block given' do
             it "yields converted string by NKF" do
               expect do |b|
                 proxy.open(src_path('data-simple-sjis.txt')) do |f|

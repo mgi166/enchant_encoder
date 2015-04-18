@@ -28,12 +28,8 @@ module FileEncoder
 
     def open(*args, &block)
       if @obj.respond_to?(:open)
-        if block_given?
-          yield @obj.open(*args).extend(FileEncoder::Proxy::NkfEach)
-        else
-          new = @obj.open(*args)
-          new.extend(FileEncoder::Proxy::NkfEach)
-        end
+        io = @obj.open(*args).extend(FileEncoder::Proxy::NkfEach)
+        block_given? ? yield(io) : io
       else
         @obj.open(*args, &block)
       end
