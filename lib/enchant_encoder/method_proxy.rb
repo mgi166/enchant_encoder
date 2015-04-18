@@ -2,8 +2,6 @@ require 'file_encoder/proxy/nkf_each.rb'
 
 module FileEncoder
   class MethodProxy
-    include FileEncoder::Proxy::NkfEach
-
     def initialize(obj)
       @obj = obj
     end

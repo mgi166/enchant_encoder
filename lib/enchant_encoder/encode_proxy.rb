@@ -1,10 +1,7 @@
 require 'nkf'
-require 'file_encoder/extendable'
 
 module FileEncoder
   class EncodeProxy
-    include FileEncoder::Extendable
-
     def initialize(obj)
       @obj = obj
     end
