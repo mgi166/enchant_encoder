@@ -27,5 +27,14 @@ module FileEncoder
         @obj.foreach(*args, &block)
       end
     end
+
+    def open(*args, &block)
+      if @obj.respond_to?(:open)
+        new = @obj.open(*args, &block)
+        new.extend(FileEncoder::Proxy::NkfEach)
+      else
+        @obj.open(*args, &block)
+      end
+    end
   end
 end
