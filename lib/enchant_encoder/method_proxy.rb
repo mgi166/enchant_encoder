@@ -8,8 +8,12 @@ module FileEncoder
 
     def each(*args, &block)
       if @obj.respond_to?(:each)
-        @obj.each do |row|
-          yield ::NKF.nkf('-Lu -w -m0', row)
+        if block_given?
+          @obj.each do |row|
+            yield ::NKF.nkf('-Lu -w -m0', row)
+          end
+        else
+          @obj.each.extend(FileEncoder::Proxy::NkfEach)
         end
       else
         @obj.each(*args, &block)
