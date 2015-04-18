@@ -22,8 +22,12 @@ module FileEncoder
 
     def foreach(*args, &block)
       if @obj.respond_to?(:foreach)
-        @obj.foreach(*args) do |row|
-          yield ::NKF.nkf('-Lu -w -m0', row)
+        if block_given?
+          @obj.foreach(*args) do |row|
+            yield ::NKF.nkf('-Lu -w -m0', row)
+          end
+        else
+          @obj.foreach(*args).extend(FileEncoder::Proxy::NkfEach)
         end
       else
         @obj.foreach(*args, &block)

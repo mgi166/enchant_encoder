@@ -58,10 +58,25 @@ RSpec.describe FileEncoder::EncodeProxy do
         end
 
         context '#foreach' do
-          it "yields converted string by NKF" do
-            expect do |b|
-              proxy.foreach(src_path('data-simple-sjis.txt'), &b)
-            end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+          context 'block given' do
+            it "yields converted string by NKF" do
+              expect do |b|
+                proxy.foreach(src_path('data-simple-sjis.txt'), &b)
+              end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+            end
+          end
+
+          context 'no block given' do
+            it do
+              expect(proxy.foreach(src_path('data-simple-sjis.txt'))).to be_instance_of Enumerator
+            end
+
+            it "yields converted string by NKF" do
+              enum = proxy.foreach(src_path('data-simple-sjis.txt'))
+              expect do |b|
+                enum.each(&b)
+              end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+            end
           end
         end
 
