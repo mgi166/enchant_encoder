@@ -11,7 +11,7 @@ module FileEncoder
         file_opts = {universal_newline: false}.merge(options)
         begin
           # NOTE: This IO object that I want to extend module
-          f = File.open(*args, file_opts).extend(FileEncoder::NkfGets)
+          f = File.open(*args, file_opts).extend(NkfMethods::Gets)
         rescue ArgumentError => e
           raise unless /needs binmode/ =~ e.message and args.size == 1
           args << "rb"

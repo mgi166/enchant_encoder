@@ -1,4 +1,3 @@
-require 'file_encoder/nkf_each.rb'
 require 'csv'
 require 'nkf'
 
@@ -14,7 +13,7 @@ module FileEncoder
           yield ::NKF.nkf('-Lu -w -m0', row)
         end
       else
-        @obj.each.extend(NkfEach)
+        @obj.each.extend(NkfMethods::Each)
       end
     end
 
@@ -27,7 +26,7 @@ module FileEncoder
             yield ::NKF.nkf('-Lu -w -m0', row)
           end
         else
-          @obj.foreach(*args).extend(NkfEach)
+          @obj.foreach(*args).extend(NkfMethods::Each)
         end
       end
     end
@@ -36,7 +35,7 @@ module FileEncoder
       if @obj == CSV
         CsvRefiner.new(@obj).open(*args, &block)
       else
-        io = @obj.open(*args).extend(NkfEach)
+        io = @obj.open(*args).extend(NkfMethods::Each)
         block_given? ? yield(io) : io
       end
     end

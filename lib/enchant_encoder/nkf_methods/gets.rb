@@ -1,5 +1,5 @@
-module FileEncoder
-  module NkfGets
+module FileEncoder::NkfMethods
+  module Gets
     def gets(*args)
       if str = super(*args)
         ::NKF.nkf('-Lu -w -m0', str)
