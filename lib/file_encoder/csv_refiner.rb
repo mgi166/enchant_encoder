@@ -45,5 +45,18 @@ module FileEncoder
   end
 
   class CsvRefiner
+    def initialize(obj)
+      @obj = obj
+    end
+
+    using CSVExtention
+
+    def foreach(*args, &block)
+      CSV.foreach(*args, &block)
+    end
+
+    def open(*args, &block)
+      CSV.open(*args, &block)
+    end
   end
 end
