@@ -1,3 +1,5 @@
+require 'csv'
+
 module FileEncoder
   module CSVExtention
     refine CSV.singleton_class do
