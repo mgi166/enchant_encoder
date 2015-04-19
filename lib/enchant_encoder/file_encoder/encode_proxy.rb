@@ -4,12 +4,7 @@ module FileEncoder
   class EncodeProxy
     def initialize(obj)
       @obj = obj.dup
-
-      if @obj.respond_to?(:each)
-        @obj.send(:extend, FileEncoder::Proxy::Nkfable)
-      else
-        @obj
-      end
+      @obj.extend(FileEncoder::Proxy::Nkfable)
     end
 
     def method_missing(method, *args, &block)
