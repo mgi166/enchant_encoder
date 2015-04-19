@@ -86,24 +86,30 @@ RSpec.describe FileEncoder::EncodeProxy do
           context 'block given' do
             it "yields converted string by NKF" do
               expect do |b|
-                proxy.open(src_path('data-simple-sjis.txt')) do |f|
+                proxy.open(src_path('data-simple-sjis.csv')) do |f|
                   f.each(&b)
                 end
-              end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+              end.to yield_successive_args(
+                ["あああ", "いいい", "ううう"],
+                ["えええ", "おおお", "かかか"],
+              )
             end
           end
 
           context 'no block given' do
             it do
-              csv = proxy.open(src_path('data-simple-sjis.txt'))
+              csv = proxy.open(src_path('data-simple-sjis.csv'))
               expect(csv).to be_instance_of CSV
             end
 
             it "yields converted string by NKF" do
-              csv = proxy.open(src_path('data-simple-sjis.txt'))
+              csv = proxy.open(src_path('data-simple-sjis.csv'))
               expect do |b|
                 csv.each(&b)
-              end.to yield_successive_args("あああ\n", "いいい\n", "ううう\n")
+              end.to yield_successive_args(
+                ["あああ", "いいい", "ううう"],
+                ["えええ", "おおお", "かかか"],
+              )
             end
           end
         end
@@ -111,4 +117,3 @@ RSpec.describe FileEncoder::EncodeProxy do
     end
   end
 end
-
