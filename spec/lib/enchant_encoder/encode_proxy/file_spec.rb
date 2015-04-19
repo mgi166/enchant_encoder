@@ -1,7 +1,7 @@
 RSpec.describe FileEncoder::EncodeProxy do
   describe '#method_missing' do
     context 'when File' do
-      let(:proxy) { FileEncoder::EncodeProxy.new(file) }
+      let(:proxy) { FileEncoder::EncodeProxy.new(file, {}) }
 
       context 'instance' do
         let(:file) { File.open(src_path('data-simple-sjis.txt')) }

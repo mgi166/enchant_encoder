@@ -5,13 +5,15 @@ module FileEncoder
   class EncodeProxy
     def initialize(obj, options)
       @obj = obj
-      @options = options
+      @options = {}.tap do |hash|
+        hash[:nkf_option] = options[:nkf_option] ? options[:nkf_option] : FileEncoder.config.nkf_option
+      end
     end
 
     def each(*args, &block)
       if block_given?
         @obj.each do |row|
-          yield ::NKF.nkf('-Lu -w -m0', row)
+          yield ::NKF.nkf(nkf_option, row)
         end
       else
         @obj.each.extend(NkfMethods::Each)
@@ -24,7 +26,7 @@ module FileEncoder
       else
         if block_given?
           @obj.foreach(*args) do |row|
-            yield ::NKF.nkf('-Lu -w -m0', row)
+            yield ::NKF.nkf(nkf_option, row)
           end
         else
           @obj.foreach(*args).extend(NkfMethods::Each)
@@ -43,6 +45,12 @@ module FileEncoder
 
     def method_missing(method, *args, &block)
       @obj.send(method, *args, &block)
+    end
+
+    private
+
+    def nkf_option
+      @options[:nkf_option]
     end
   end
 end
