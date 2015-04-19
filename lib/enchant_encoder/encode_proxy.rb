@@ -3,8 +3,9 @@ require 'nkf'
 
 module FileEncoder
   class EncodeProxy
-    def initialize(obj)
+    def initialize(obj, options)
       @obj = obj
+      @options = options
     end
 
     def each(*args, &block)
