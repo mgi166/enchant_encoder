@@ -9,16 +9,12 @@ module FileEncoder
     end
 
     def each(*args, &block)
-      if @obj.respond_to?(:each)
-        if block_given?
-          @obj.each do |row|
-            yield ::NKF.nkf('-Lu -w -m0', row)
-          end
-        else
-          @obj.each.extend(NkfEach)
+      if block_given?
+        @obj.each do |row|
+          yield ::NKF.nkf('-Lu -w -m0', row)
         end
       else
-        @obj.each(*args, &block)
+        @obj.each.extend(NkfEach)
       end
     end
 
@@ -26,13 +22,9 @@ module FileEncoder
       if @obj == CSV
         CsvRefiner.new(@obj).foreach(*args, &block)
       else
-        if @obj.respond_to?(:foreach)
-          if block_given?
-            @obj.foreach(*args) do |row|
-              yield ::NKF.nkf('-Lu -w -m0', row)
-            end
-          else
-            @obj.foreach(*args).extend(NkfEach)
+        if block_given?
+          @obj.foreach(*args) do |row|
+            yield ::NKF.nkf('-Lu -w -m0', row)
           end
         else
           @obj.foreach(*args).extend(NkfEach)
@@ -44,12 +36,8 @@ module FileEncoder
       if @obj == CSV
         CsvRefiner.new(@obj).open(*args, &block)
       else
-        if @obj.respond_to?(:open)
-          io = @obj.open(*args).extend(NkfEach)
-          block_given? ? yield(io) : io
-        else
-          @obj.open(*args, &block)
-        end
+        io = @obj.open(*args).extend(NkfEach)
+        block_given? ? yield(io) : io
       end
     end
 
