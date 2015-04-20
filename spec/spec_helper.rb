@@ -1,4 +1,3 @@
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -23,7 +22,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  Dir["#{__dir__}/support/**/*"].each { |f| require f }
+  Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
+  Dir["#{__dir__}/../lib/**/*.rb"].each { |f| require f }
 
   config.include SourceHelper
 
