@@ -1,12 +1,12 @@
 require 'csv'
 require 'nkf'
 
-module FileEncoder
+module EnchantEncoder
   class EncodeProxy
     def initialize(obj, options)
       @obj = obj
       @options = {}.tap do |hash|
-        hash[:nkf_option] = options[:nkf_option] ? options[:nkf_option] : FileEncoder.config.nkf_option
+        hash[:nkf_option] = options[:nkf_option] ? options[:nkf_option] : EnchantEncoder.config.nkf_option
       end
     end
 

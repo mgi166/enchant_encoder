@@ -1,4 +1,4 @@
-module FileEncoder::NkfMethods
+module EnchantEncoder::NkfMethods
   module Gets
     def gets(*args)
       if str = super(*args)

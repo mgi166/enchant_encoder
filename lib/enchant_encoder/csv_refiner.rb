@@ -1,6 +1,6 @@
 require 'csv'
 
-module FileEncoder
+module EnchantEncoder
   module CSVExtention
     refine CSV.singleton_class do
       def open(*args)

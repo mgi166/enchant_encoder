@@ -1,4 +1,4 @@
-module FileEncoder::NkfMethods
+module EnchantEncoder::NkfMethods
   module Each
     def each(*args, &block)
       super(*args) do |row|

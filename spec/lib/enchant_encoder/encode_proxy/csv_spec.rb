@@ -1,9 +1,9 @@
 require 'csv'
 
-RSpec.describe FileEncoder::EncodeProxy do
+RSpec.describe EnchantEncoder::EncodeProxy do
   describe '#method_missing' do
     context 'when CSV' do
-      let(:proxy) { FileEncoder::EncodeProxy.new(csv, {}) }
+      let(:proxy) { EnchantEncoder::EncodeProxy.new(csv, {}) }
       let(:csv) { CSV }
 
       context '#each' do
